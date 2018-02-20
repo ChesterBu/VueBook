@@ -1,13 +1,13 @@
 <template>
-  <div>
-    home
-  </div>
+    <div>
+      detail
+
+    </div>
 </template>
 
 <script>
 
 export default {
-  
   data () {
     return {
 

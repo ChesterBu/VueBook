@@ -1,13 +1,13 @@
 <template>
   <div>
-    home
+    list
+
   </div>
 </template>
 
 <script>
 
 export default {
-  
   data () {
     return {
 
