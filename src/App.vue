@@ -1,11 +1,19 @@
 <template>
   <div id="app">
     <router-view></router-view>
-     </div>
+    <Tab></Tab>
+  </div>
 </template>
 <script>
+import Tab from './components/Tab'
+export default {
+  name:'app',
+  components:{
+    Tab
+  }
+}
 </script>
-
+  
 <style>
 * {
   margin: 0;
@@ -22,4 +30,5 @@ input,
 button {
   -webkit-appearance: none;
 }
+@import url('//at.alicdn.com/t/font_571046_h8fmf6cvfclq5mi.css');
 </style>
