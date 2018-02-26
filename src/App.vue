@@ -31,4 +31,11 @@ button {
   -webkit-appearance: none;
 }
 @import url('//at.alicdn.com/t/font_571046_h8fmf6cvfclq5mi.css');
+.content{
+  position: fixed;
+  width: 100%;
+  top: 40px;
+  bottom: 50px;
+  overflow: auto;
+}
 </style>
