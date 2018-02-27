@@ -19,9 +19,8 @@ export default {
       swiperOption: {
         // some swiper options/callbacks
         // 所有的参数同 swiper 官方 api 参数
-        autoplay: 3500,
+        autoplay: true,
         setWrapperSize: true,
-        pagination: ".swiper-pagination",
         observeParents: true
       }
     };

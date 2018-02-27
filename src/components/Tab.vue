@@ -11,13 +11,12 @@
     </router-link>
     <router-link to="/add">
     <i class="iconfont icon-add"></i><span>添加</span>
-
     </router-link>
   </div>
 </template>
 
-<style scoped lang='scss'>
 
+<style scoped lang='scss'>
 .footer {
   position: fixed;
   left: 0;
@@ -34,8 +33,8 @@
     align-items: center;
     justify-content: center;
   }
-  a.router-link-active{
-      color:red
+  a.router-link-active {
+    color: red;
   }
 }
 </style>
