@@ -1,34 +1,30 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-import List from './views/List.vue'
-import Detail from './views/Detail.vue'
-import Collect from './views/Collect.vue'
-import Add from './views/Add.vue'
+
 
 Vue.use(Router)
 
 export default new Router({
   routes: [{
       path: '/home',
-      component: Home,
+      component: ()=>import('./views/Home.vue'),
       meta:{keepAlive:true}
     },
     {
       path: '/add',
-      component: Add
+      component: ()=>import('./views/Add.vue')
     },
     {
       path: '/list',
-      component: List
+      component: ()=>import('./views/List.vue')
     },
     {
       path: '/collect',
-      component: Collect
+      component: ()=>import('./views/Collect.vue')
     },
     {
       path: '/detail/:bid',
-      component: Detail,
+      component: ()=>import('./views/Detail.vue'),
       name:'detail'
     },
     {

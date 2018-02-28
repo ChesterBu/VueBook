@@ -4,7 +4,7 @@
     <div class="content" ref="scroll" @scroll="loadMore">
       <ul>
         <router-link v-for="(book,key) in books" :key="key" :to="{name:'detail',params:{bid:book.bookId}}" tag="li">
-          <img :src="book.bookCover">
+          <img v-lazy="book.bookCover"/>
           <div>
             <h4>{{book.bookName}}</h4>
             <p>{{book.bookInfo}}</p>
@@ -24,25 +24,65 @@ export default {
   created() {
     this.getData();
   },
+  mounted() {
+    let mv = false;
+    let scroll = this.$refs.scroll;
+    let top = scroll.offsetTop;
+    scroll.addEventListener(
+      "touchstart",
+      e => {
+        let start = e.touches[0].pageY;
+        let distance = 0;
+        let end = e => {
+          if (!mv) return;
+          scroll.style.transition = ".4s";
+          scroll.style.top = top + "px";
+          this.books = [];
+          this.hasMore = true;
+          this.isLoading = false;
+          this.offset = 0;
+          mv = false;
+          this.getData();
+        };
+        let move = e => {
+          let current = e.touches[0].pageY;
+          distance = current - start;
+          scroll.style.transition = "none";
+          if (distance > 0) {
+            if (distance <= 90 && scroll.scrollTop == 0) {
+              mv = true;
+              scroll.style.top = distance + top + "px";
+              scroll.addEventListener("touchend", end);
+            }
+          } else {
+            scroll.removeEventListener("touchend", end);
+            scroll.removeEventListener("touchmove", move);
+          }
+        };
+        scroll.addEventListener("touchmove", move);
+      },
+      false
+    );
+  },
+
   data() {
     return {
       books: [],
       offset: 0,
       hasMore: true,
-      isLoading:false,
+      isLoading: false
     };
   },
   methods: {
-    loadMore(){
-      clearTimeout(this.timer)     //debounce
-      this.timer = setTimeout(()=>{
-              //卷去高度   可见去高度     总高
-        let {scrollTop,clientHeight,scrollHeight}=this.$refs.scroll 
-        if(scrollTop+clientHeight+20 >scrollHeight){
-          this.getData()
+    loadMore() {
+      clearTimeout(this.timer); //debounce
+      this.timer = setTimeout(() => {
+        //卷去高度   可见去高度     总高
+        let { scrollTop, clientHeight, scrollHeight } = this.$refs.scroll;
+        if (scrollTop + clientHeight + 20 > scrollHeight) {
+          this.getData();
         }
-      },20)
-      
+      }, 20);
     },
 
     async remove(id) {
