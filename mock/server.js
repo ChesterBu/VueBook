@@ -3,6 +3,7 @@ const fs = require('fs')
 const url = require('url')
 const process = require('process')
 const sliders = require('./sliders')
+const pageSize = 5
 
 function read(cb) {
     fs.readFile('mock/book.json', 'utf8', (err, data) => {
@@ -63,10 +64,10 @@ http.createServer((req, res) => {
                 });
                 req.on('end', () => {
                     let book = JSON.parse(str);
-                    read(books=> { // 添加id
+                    read(books => { // 添加id
                         book.bookId = books.length ? books[books.length - 1].bookId + 1 : 1;
                         books.push(book); //将数据放到books中 ，books在内存中
-                        write(books,()=> {
+                        write(books, () => {
                             res.end(JSON.stringify(book));
                         });
                     });
@@ -107,5 +108,13 @@ http.createServer((req, res) => {
                 break;
         }
         return
+    }
+    if (pathname === '/page') {
+        let offset = +query.offset || 0
+        read(books => {
+            let result = books.reverse().slice(offset, offset + pageSize)
+            let hasMore = (books.length > offset + pageSize) ? true : false
+            res.end(JSON.stringify({hasMore,books:result}))
+        })
     }
 }).listen(9999)

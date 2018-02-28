@@ -44,3 +44,7 @@ export let addBook=(id,data)=>{
 export let getHomeInfo = ()=>{
     return axios.all([getSliders(),getHotBooks()])
 }
+// base on offset get books
+export let pagination=(offset)=>{
+    return axios.get(`/page?offset=${offset}`)
+}

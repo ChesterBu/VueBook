@@ -1,7 +1,7 @@
 <template>
   <div>
     <MHeader>列表页</MHeader>
-    <div class="content">
+    <div class="content" ref="scroll" @scroll="loadMore">
       <ul>
         <router-link v-for="(book,key) in books" :key="key" :to="{name:'detail',params:{bid:book.bookId}}" tag="li">
           <img :src="book.bookCover">
@@ -19,24 +19,46 @@
 
 <script>
 import MHeader from "../components/MHeader";
-import { getBooks,removeBook} from "../api/index";
+import { removeBook, pagination } from "../api/index";
 export default {
   created() {
     this.getData();
   },
   data() {
     return {
-      books: []
+      books: [],
+      offset: 0,
+      hasMore: true,
+      isLoading:false,
     };
   },
   methods: {
-    async remove(id){
-      await removeBook(id)
-      this.books = this.books.filter(item => item.bookId !== id)
+    loadMore(){
+      clearTimeout(this.timer)     //debounce
+      this.timer = setTimeout(()=>{
+              //卷去高度   可见去高度     总高
+        let {scrollTop,clientHeight,scrollHeight}=this.$refs.scroll 
+        if(scrollTop+clientHeight+20 >scrollHeight){
+          this.getData()
+        }
+      },20)
+      
+    },
+
+    async remove(id) {
+      await removeBook(id);
+      this.books = this.books.filter(item => item.bookId !== id);
     },
 
     async getData() {
-      this.books = await getBooks();
+      if (this.hasMore && !this.isLoading) {
+        this.isLoading = true;
+        let { hasMore, books } = await pagination(this.offset);
+        this.books = [...this.books, ...books];
+        this.hasMore = hasMore;
+        this.isLoading = false;
+        this.offset = this.books.length;
+      }
     }
   },
   components: {

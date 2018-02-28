@@ -11,7 +11,8 @@ Vue.use(Router)
 export default new Router({
   routes: [{
       path: '/home',
-      component: Home
+      component: Home,
+      meta:{keepAlive:true}
     },
     {
       path: '/add',
