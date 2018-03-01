@@ -1,5 +1,5 @@
 import axios from 'axios'
-axios.defaults.baseURL = 'http://192.168.0.103:9999'
+axios.defaults.baseURL = 'http://localhost:9999'
 axios.interceptors.response.use((res)=>{
     return res.data
 })

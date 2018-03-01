@@ -15,9 +15,14 @@ Vue.use(VueAwesomeSwiper,)
 
 Vue.use(VueLazyload, {
   preLoad: 1.3,
-  error: 'assets/logo.png',
-  loading: 'assets/loading.gif',
+  error: 'http://img1.imgtn.bdimg.com/it/u=3779605030,1222595953&fm=27&gp=0.jpg',
+  loading: 'http://img.lanrentuku.com/img/allimg/1212/5-121204193R0-50.gif',
   attempt: 1
+})
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  next()
 })
 
 Vue.config.productionTip = false

@@ -9,7 +9,10 @@
             <h4>{{book.bookName}}</h4>
             <p>{{book.bookInfo}}</p>
             <b>{{book.bookPrice}}</b>
-            <button @click.stop="remove(book.bookId)">删除</button>
+            <div class="btn-list">
+              <button @click.stop="remove(book.bookId)">删除</button>
+              <button @click.stop="addCart(book)">添加</button>
+            </div>
           </div>
         </router-link>
       </ul>
@@ -99,6 +102,10 @@ export default {
         this.isLoading = false;
         this.offset = this.books.length;
       }
+    },
+
+    addCart(book){
+      this.$store.commit('addToCart',book)
     }
   },
   components: {
@@ -141,4 +148,16 @@ export default {
   border-radius: 15px;
   outline: none;
 }
+.more{
+    margin: 10px;
+    background: #2afedd;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 20px;
+  }
+  .btn-list{
+    display: flex;
+    justify-content: space-around;
+  }
 </style>

@@ -7,7 +7,7 @@
     <i class="iconfont icon-liebiao"></i><span>列表</span>
     </router-link>
     <router-link to="/collect">
-    <i class="iconfont icon-icon-"></i><span>收藏</span> 
+    <i class="iconfont icon-icon-"></i><span>购物车</span> 
     </router-link>
     <router-link to="/add">
     <i class="iconfont icon-add"></i><span>添加</span>
